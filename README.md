@@ -7,3 +7,8 @@ Atcoder Beginner Contestの自分の解答
 * 問題名のファイルの文字列連続(ex. DD.cpp)は現在解いている途中のファイルでまだ通してない。
 * それぞれのフォルダには気づきやポイントなどを記したREADME.mdが付属している。
 * このリポジトリは順次更新される。
+
+# リンク
+解いた状況はこちらから
+
+http://kenkoooo.com/atcoder/?user=Badlylucky&rivals=&kind=category
