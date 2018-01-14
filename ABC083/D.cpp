@@ -6,28 +6,21 @@ typedef long long ll;
 
 using namespace std;
 
-bool check(string s,int n)
-{
-	
-}
-
 int main()
 {
 	string s;
-	int ans=0;
-	int l,r,mid;
+	int ans;
+	int tmp;
+	
 	
 	cin>>s;
-	l=1;
-	r=s.length();
-	while(l<r)
+	ans=s.length();
+	for(int i=0;i<s.length()-1;i++)
 	{
-		mid = (l+r)/2;
-		if(check(s,mid)==true)
+		if(s[i]!=s[i+1])
 		{
-			l=mid;
-		}else{
-			r=mid;
+			tmp = max(i+1,(int)s.length()-i-1);
+			ans = max(ans,i+1);
 		}
 	}
 	cout<<ans<<endl;
