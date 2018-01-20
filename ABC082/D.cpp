@@ -31,9 +31,6 @@ int main()
 			tt%=2;
 		}
 	}
-	xy[tt].push_back(cnt);
-	x -= xy[0][0];
-	xy[0].erase(xy[0].begin());
 	//テスト出力
 	/*
 	cerr<<"("<<x<<","<<y<<")"<<endl;
@@ -55,7 +52,9 @@ int main()
 	{
 		dp[i]=-1;
 	}
-	dp[10000]=1;
+	xy[tt].push_back(cnt);
+	dp[10000+xy[0][0]]=1;
+	xy[0].erase(xy[0].begin());
 	for(int i=0;i<xy[0].size();i++)
 	{
 		for(int j=0;j<20001;j++)
@@ -77,8 +76,10 @@ int main()
 			}
 		}
 	}
+	cerr<<dp[10000+x]<<endl;
 	if(dp[10000+x]!=xy[0].size()+1)
 	{
+		cerr<<"x check"<<endl;
 		cout<<"No"<<endl;
 		return 0;
 	}
@@ -109,10 +110,12 @@ int main()
 			}
 		}
 	}
+	cerr<<dp[10000+y]<<endl;
 	if(dp[10000+y]==xy[1].size()+1)
 	{
 		cout<<"Yes"<<endl;
 	}else{
+		cerr<<"y check"<<endl;
 		cout<<"No"<<endl;
 	}
 	return 0;
