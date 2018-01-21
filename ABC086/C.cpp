@@ -10,7 +10,6 @@ using namespace std;
 int x[100001];
 int y[100001];
 int t[100001];
-//bool dp[100001][100001][100001];
 int main()
 {
 	int n;
