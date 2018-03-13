@@ -19,7 +19,7 @@ int bs(int d[],int n,int t)
 	int r=n;
 	if(d[n-1]<=t)
 	{
-		return -1;
+		return n;
 	}
 	if(d[0]>t)
 	{
@@ -35,7 +35,42 @@ int bs(int d[],int n,int t)
 			l=mid;
 		}
 	}
+	while(d[r]==t)
+	{
+		r++;
+	}
+	//r--;
 	return r;
+}
+
+int bs2(int d[],int n,int t)
+{
+	int l=0;
+	int r=n;
+	if(d[n-1]<=t)
+	{
+		return n;
+	}
+	if(d[0]>t)
+	{
+		return 0;
+	}
+	while(r-l>1)
+	{
+		int mid=(l+r)/2;
+		if(d[mid]<t)
+		{
+			l=mid;
+		}else{
+			r=mid;
+		}
+	}
+	while(d[l]==t)
+	{
+		l--;
+	}
+	l++;
+	return l;
 }
 
 int main()
@@ -62,24 +97,16 @@ int main()
 
 	for(int i=0;i<n;i++)
 	{
-		//int bindex = bs(b,n,a[i]);
+		int aindex = bs2(a,n,b[i]);
 		int cindex = bs(c,n,b[i]);
-		//ab[i]=n-bindex;
+		ab[i]=aindex;
 		bc[i]=n-cindex;
+		//cerr<<b[i]<<" "<<a[aindex]<<" "<<c[cindex]<<endl;
 	}
 
 	for(int i=0;i<n;i++)
 	{
-		int bindex = bs(b,n,a[i]);
-		if(bindex==-1)
-		{
-			break;
-		}
-		int bb = b[bindex];
-		for(int j=bindex;j<n;j++)
-		{
-			ans += bc[j];
-		}
+		ans += ab[i]*bc[i];
 	}
 	cout<<ans<<endl;
 	return 0;

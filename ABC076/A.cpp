@@ -4,28 +4,17 @@
 #include <vector>
 #include <cmath>
 typedef long long ll;
+ll MOD = 1e9+7;
 
 using namespace std;
 
-class Edge
-{
-	public:
-	int cost;
-	int next;
-
-	Edge(int n,int c)
-	{
-		next=n;
-		cost=c;
-	}
-};
-
-vector<Edge> g[100000];
-
 int main()
 {
-	int k;
-	cin>>k;
-	g[0].push_back(Edge(n,n));
+	int r,g;
+	int ans=0;
+	
+	cin>>r>>g;
+	ans = 2*g-r;
+	cout<<ans<<endl;
 	return 0;
 }
