@@ -5,7 +5,8 @@
 
 using namespace std;
 
-float dp[3000][3000];
+int dpw[3000];
+int dps[3000];
 int a,b,c,d,e,f;
 float pmax=0;//濃度の最大
 pair<int,int> maxindex;
@@ -16,14 +17,14 @@ int fullwater(int now,bool af)
 	{
 		if(now+a<=f)
 		{
-			dp[now+a][0]=0;
+			dpw[now+a]=1;
 			fullwater(now+a,true);
 			fullwater(now+a,false);
 		}
 	}else{
 		if(now+b<=f)
 		{
-			dp[now+b][0]=0;
+			dpw[now+b]=1;
 			fullwater(now+b,true);
 			fullwater(now+b,false);
 		}
@@ -31,32 +32,23 @@ int fullwater(int now,bool af)
 	return 0;
 }
 
-int fullsugar(int now,int water,bool cf)
+int fullsugar(int now,bool cf)
 {
+	cerr<<now<<endl;
 	if(cf==true)
 	{
-		if(e*water/100<now+c && now+c+water<=f)
+		if(now+c<=f)
 		{
-			dp[water][now+c]=(now+c)/water;
-			if(pmax<dp[water][now+c])
-			{
-				pmax = dp[water][now+c];
-				maxindex = make_pair(water,now+c);
-			}
-			fullsugar(now+c,water,true);
-			fullsugar(now+c,water,false);
+			dps[now+c]=1;
+			fullsugar(now+c,true);
+			fullsugar(now+c,false);
 		}
 	}else{
-		if(e*water/100<now+d && now+d+water<=f)
+		if(now+d<=f)
 		{
-			dp[water][now+d]=(now+d)/water;
-			if(pmax<dp[water][now+d])
-			{
-				pmax = dp[water][now+d];
-				maxindex = make_pair(water,now+d);
-			}
-			fullsugar(now+d,water,true);
-			fullsugar(now+d,water,false);
+			dps[now+d]=1;
+			fullsugar(now+d,true);
+			fullsugar(now+d,false);
 		}
 	}
 	return 0;
@@ -65,21 +57,33 @@ int fullsugar(int now,int water,bool cf)
 int main()
 {
 	int sugar,water;
-	int ww=0;
-	fill(dp[0],dp[3000],(float)-1);
-	dp[0][0]=0;
+	float maxn=0;
+	fill(dpw,dpw+3000,-1);
+	fill(dps,dps+3000,-1);
 	maxindex = make_pair(0,0);
 	cin>>a>>b>>c>>d>>e>>f;
 	a*=100;
 	b*=100;
+	dps[0]=1;
 	fullwater(0,true);
 	fullwater(0,false);
+	fullsugar(0,true);
+	fullsugar(0,false);
 	for(int i=0;i<=f;i++)
 	{
-		if(dp[i][0]>-1)
+		if(dpw[i]<0)
+			continue;
+		for(int j=0;j<=f;j++)
 		{
-			fullsugar(0,i,true);
-			fullsugar(0,i,false);
+			if(dps[j]<0)
+				continue;
+			float noudo = (float)(100*j/(i+j));
+			if(noudo <= e && i+j <= f&& noudo > maxn)
+			{
+				maxn = noudo;
+				maxindex.first=i+j;
+				maxindex.second=j;
+			}
 		}
 	}
 	cout<<maxindex.first<<" "<<maxindex.second<<endl;

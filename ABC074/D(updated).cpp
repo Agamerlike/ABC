@@ -9,6 +9,7 @@ typedef long long ll;
 
 ll a[300][300];//地図
 ll d[300][300];//最短経路
+bool used[300][300];//すでに取り除いた辺
 
 int main()
 {
@@ -54,15 +55,19 @@ int main()
 
 	//省ける辺を探す
 	//ワーシャルフロイド（変形）
-	for(int k=0;k<n;k++)
+	fill(used[0],used[300],false);
+	for(int i=0;i<n;i++)
 	{
-		for(int i=0;i<n;i++)
+		for(int j=0;j<n;j++)
 		{
-			for(int j=0;j<n;j++)
+			if(i==j)
+				continue;
+			for(int k=0;k<n;k++)
 			{
-				if(d[i][j]==d[i][k]+d[k][j])
+				if(i!=k && j!= k && d[i][j]==d[i][k]+d[k][j] && used[i][j]==false)
 				{
 					minus+=d[i][j];
+					used[i][j]=true;
 				}
 			}
 		}
