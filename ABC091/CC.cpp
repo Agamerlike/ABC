@@ -9,19 +9,18 @@ using namespace std;
 
 //普通のグラフの構造体に逆辺revを加えたもの
 //逆辺へのアクセスにはg[next][rev]とする
-//流せる流量はcostを代用する
 class Edge
 {
 	public:
-	int cost;
 	int next;
+	int cap;
 	int rev;
 
-	Edge(int n,int r,int c)
+	Edge(int n,int r,int ca)
 	{
 		next=n;
 		rev=r;
-		cost=c;
+		cap=ca;
 	}
 };
 
@@ -48,14 +47,14 @@ int dfs(int v,int t,int f)
 	{
 		Edge &e = g[v][i]; //値を書き換えるので参照渡しする
 		//その辺が使われていないかつまだ流せる流量が残っていればそこに流せるだけ流す
-		if(!used[e.next]&&e.cost>0)
+		if(!used[e.next]&&e.cap>0)
 		{
-			int d = dfs(e.next,t,min(f,e.cost));
+			int d = dfs(e.next,t,min(f,e.cap));
 			if(d>0)
 			{
 				//流れた分だけ流せる残量を減らし逆辺の流した量を増やす
-				e.cost-=d;
-				g[e.next][e.rev].cost += d;
+				e.cap-=d;
+				g[e.next][e.rev].cap += d;
 				return d;
 			}
 		}
@@ -76,6 +75,8 @@ int main()
 	}
 	//ここからグラフ作る
 	//s->赤->青->tの順番で流すことを考える
+	//s...0
+	//t...2*n
 	for(int i=0;i<n;i++)
 	{
 		g[0].push_back(Edge(i+1,g[i+1].size(),1));
