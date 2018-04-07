@@ -93,8 +93,8 @@ int main()
 		{
 			if(x>r[j].first && y>r[j].second)
 			{
-				g[j+1+n].push_back(Edge(j+1,g[j+1].size()-1,0));//青から赤には流せない
-				g[j+1].push_back(Edge(j+1+n,g[j+1+n].size(),1));
+				g[i+1+n].push_back(Edge(j+1,g[j+1].size()-1,0));//青から赤には流せない
+				g[j+1].push_back(Edge(i+1+n,g[i+1+n].size(),1));
 			}
 			if(x<r[j].first)
 				break;
