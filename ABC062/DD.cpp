@@ -3,66 +3,67 @@
 #include <string>
 #include <vector>
 #include <queue>
+#include <functional>
 
 using namespace std;
 
 long long a[300000];
+long long ll[300000];
+long long rr[300000];
 
 int main()
 {
 	int n;
 	long long sp=0;
 	long long sl=0;
-	long long lmax[100000];
-	long long rmin[100000];
-	long long ans;
-	priority_queue<long long>l;//後半n
-	priority_queue<long long,vector<long long>,greater<long long>>p;//前半n
+	long long ans=0;
+	priority_queue<long long>l;//後半n 降順
+	priority_queue<long long,vector<long long>,greater<long long>>p;//前半n 昇順
 	cin>>n;
 	for(int i=0;i<3*n;i++)
 	{
 		cin>>a[i];
 		ans -= a[i];
 	}
-	for(int i=n;i<n*2;i++)
+	for(int i=0;i<n;i++)
 	{
-		p=priority_queue<long long,vector<long long>,greater<long long>>();
-		l=priority_queue<long long>();
-		sp=0;
-		sl=0;
-		//前半の要素を入れる
-		for(int j=0;j<i;j++)
-		{
-			sp+=(long long)a[j];
-			p.push(a[j]);
-		}
-		//最大値を取得
-		for(int j=p.size();j>n;j=p.size())
-		{
-			sp-=p.top();
-			cerr<<i<<" "<<p.top()<<endl;
-			p.pop();
-		}
-		lmax[i-n]=sp;
-		//後半の要素を入れる
-		for(int j=i;j<n*3;j++)
-		{
-			sl+=a[j];
-			l.push(a[j]);
-		}
-		//最小値を取得
-		for(int j=l.size();j>n;j=l.size())
-		{
-			sl-=l.top();
-			cerr<<i<<" "<<l.top()<<endl;
-			l.pop();
-		}
-		rmin[i-n]=sl;
+		l.push(a[3*n-1-i]);
+		p.push(a[i]);
+		sp+=a[i];
+		sl+=a[3*n-1-i];
 	}
-	ans = lmax[0] - rmin[0];
-	for(int i=1;i<n;i++)
+	ll[n-1]=sp;
+	rr[2*n+1]=sl;
+	//llを求める
+	for(int i=n;i<2*n+1;i++)
 	{
-		ans = max(ans, lmax[i]-rmin[i]);
+		ll[i]=ll[i-1];
+		cerr<<p.top()<<endl;
+		if(p.top()<a[i])
+		{
+			ll[i]+=a[i]-p.top();
+			p.pop();
+			p.push(a[i]);
+		}
+	}
+	//rrを求める
+	for(int i=2*n;i>=n;i--)
+	{
+		rr[i]=rr[i+1];
+		if(l.top()>a[i])
+		{
+			rr[i]-=l.top()-a[i];
+			l.pop();
+			l.push(a[i]);
+		}
+	}
+
+	//差の最大値を求める
+	for(int i=n-1;i<2*n+1;i++)
+	{
+		cerr<<ll[i]<<" "<<rr[i+1]<<endl;
+		if(ans<ll[i]-rr[i+1])
+			ans=ll[i]-rr[i+1];
 	}
 	cout<<ans<<endl;
 	return 0;
