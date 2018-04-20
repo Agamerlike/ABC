@@ -42,10 +42,10 @@ int main()
 
 	for(int i=0;i<a;i++)
 	{
-		mm+=v[i];
+		mm+=(double)v[i];
 	}
 	mm/=(double)a;
-	cout<<mm<<endl;
+	cout<<fixed<<mm<<endl;
 
 	if(v[a-1]!=v[a])
 	{
