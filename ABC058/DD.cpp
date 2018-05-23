@@ -9,12 +9,12 @@ ll MOD = 1e9+7;
 
 using namespace std;
 
-ll x[100000];
-ll y[100000];
+ll x[100001];
+ll y[100001];
 
 int main()
 {
-	int n,m;
+	ll n,m;
 	ll ans=0;
 
 	ll a=0;
@@ -26,16 +26,20 @@ int main()
 	for(int i=0;i<m;i++)
 		cin>>y[i];
 	
-	for(int i=0;i<n;i++)
+	for(ll i=0;i<n;i++)
 	{
 		a+=x[i]*i;
-		a-=x[i]*(n-1-i);
+		a-=x[i]*(n-i-1);
+		a%=MOD;
+		a+=MOD;
 	}
 	a%=MOD;
-	for(int i=0;i<m;i++)
+	for(ll i=0;i<m;i++)
 	{
 		b+=y[i]*i;
-		b-=y[i]*(n-1-i);
+		b-=y[i]*(n-i-1);
+		b%=MOD;
+		b+=MOD;
 	}
 	b%=MOD;
 	ans = a*b;
